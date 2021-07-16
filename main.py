@@ -3,88 +3,66 @@ import os
 import requests
 import json
 import random
-from replit import db
 from discord.ext import commands
 from keep_alive import keep_alive
 
-client = discord.Client()
+bot = commands.Bot(command_prefix = "%")
 
-help_message = "Commands: %inspire, %help, %insult, %smokingoose, %coinflip, %invite, %hyperwolf, %rndltr, %rolldice"
-pings = ["@"]
-weebs_bad = ["weeb", "Weeb"]
-weebs_bad_response = "Ew, weebs."
-pinged = "Someone was pinged here, or the @ symbol was used."
 flip_a_coin = ["Heads", "Tails"]
-noob = ["noob", "nub", "noooob", "Noob", "Nub", "Noooob"]
-noob_responses = ["You are noob", "You are big noob"]
-insults = ["fuck you", "You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp."]
+insults = ["You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp.", "You are as useful as a white crayon.", "If your mom drops you off at school its considered littering.", "You are a waste of sperm, your mom should have swallowed.", "You're the type of person to fall in the shower and try to use the water to get back up.", "You're the type of person to break friendships over pineapples on pizza."]
 smokin_goose = "Smokin' Goose bot created on July 12th 2021. Created by Hyperwolf#2525."
-h_t = ["hello there", "Hello there", "Hello There", "hellothere"]
-g_k = "General Kenobi!"
 invite_link = "Invite link currently unavaliable."
-hyperwolf_desc = "Creator of the bot Smokin' Goose."
 letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-dice_d6 = ["1","2","3","4","5","6"]
 
 
-if "responding" not in db.keys():
-  db["responding"] = True
+embed=discord.Embed(title="Commands:", description="A list of all the commands will be shown below.", color=0x00ffff)
+embed.set_author(name="Smokin' Goose", icon_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBjrw3JnC6dABO3jnLvizGcpGQrn3bek812g&usqp=CAU")
+embed.add_field(name="%quote", value="Shows a quote from a famous person.", inline=False)
+embed.add_field(name="%insult", value="Shows a user-suggested insult.", inline=False)
+embed.add_field(name="%info", value="Shows information about the bot.", inline=False)
+embed.add_field(name="%coinflip", value="Flips a coin with 2 sides, Heads, or Tails", inline=False)
+embed.add_field(name="%invite", value="Sends the invite link in order to invite the bot to your server.", inline=False)
+embed.add_field(name="%rndltr", value="Randomly generates a letter of the English alphabet.", inline=False)
+embed.add_field(name="%rolld6", value="Rolls a dice with 6 sides.", inline=False)
+embed.add_field(name="%rolld20", value="Rolls a dice with 20 sides.", inline=False)
+embed.add_field(name="%help", value="Shows this message.", inline=False)
+embed.set_footer(text="Help command")
+
+
+@bot.command()
+async def test(ctx):
+	await ctx.send("test command") #attempt at "say command"
+
+@bot.command()
+async def insult(ctx):
+  await ctx.send(random.choice(insults))
+
+@bot.command()
+async def help(ctx):
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def quote(ctx):
+  quote = get_quote()
+  await ctx.send(quote)
+
+@bot.command()
+async def coinflip(ctx):
+  await ctx.send(random.choice(flip_a_coin))
+
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
   json_data = json.loads(response.text)
   quote = json_data[0]['q'] + " -" + json_data [0]['a']
   return(quote)
   
-@client.event
+@bot.event
 async def on_ready():
-  print('We have logged in as {0.user}'.format(client))
+  print('We have logged in as {0.user}'.format(bot))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="discord.gg/GPQwfRF9wT"))
 
-@client.event
-async def on_message(message):
-  if message.author == client.user:
-    return
 
-  msg = message.content
 
-  if msg.startswith('%inspire'):
-    quote = get_quote()
-    await message.channel.send(quote)
-
-  if any(word in msg for word in pings):
-    await message.channel.send(pinged)
-
-  if any(word in msg for word in weebs_bad):
-      await message.channel.send(weebs_bad_response)
-
-  if any(word in msg for word in noob):
-    await message.channel.send(random.choice(noob_responses))
-
-  if msg.startswith('%help'):
-    await message.channel.send(help_message)
-
-  if msg.startswith('%coinflip'):
-    await message.channel.send(random.choice(flip_a_coin))
-
-  if msg.startswith('%insult'):
-    await message.channel.send(random.choice(insults))
-
-  if msg.startswith('%smokingoose'):
-    await message.channel.send(smokin_goose)
-
-  if msg.startswith('%invite'):
-    await message.channel.send(invite_link)
-
-  if msg.startswith('%hyperwolf'):
-    await message.channel.send(hyperwolf_desc)
-  
-  if any(word in msg for word in h_t):
-    await message.channel.send(g_k)
-
-  if msg.startswith('%rndltr'):
-    await message.channel.send(random.choice(letters))
-
-  if msg.startswith('%rolldice'):
-    await message.channel.send(random.choice(dice_d6))
 
 keep_alive()
-client.run(os.getenv('TOKEN'))
+bot.run(os.getenv('TOKEN'))
