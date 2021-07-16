@@ -12,7 +12,8 @@ bot.remove_command('help')
 flip_a_coin = ["Heads", "Tails"]
 insults = ["You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp.", "You are as useful as a white crayon.", "If your mom drops you off at school its considered littering.", "You are a waste of sperm, your mom should have swallowed.", "You're the type of person to fall in the shower and try to use the water to get back up.", "You're the type of person to break friendships over pineapples on pizza."]
 smokin_goose = "Smokin' Goose bot created on July 12th 2021. Created by Hyperwolf#2525."
-invite_link = "Invite link currently unavaliable."
+invite_link = "https://discord.com/api/oauth2/authorize?client_id=864266661824692256&permissions=67226817&scope=bot"
+discord_link = "Join the support server here: discord.gg/GPQwfRF9wT"
 letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 
 
@@ -27,7 +28,7 @@ embed.add_field(name="%rndltr", value="Randomly generates a letter of the Englis
 embed.add_field(name="%rolld6", value="Rolls a dice with 6 sides.", inline=False)
 embed.add_field(name="%rolld20", value="Rolls a dice with 20 sides.", inline=False)
 embed.add_field(name="%help", value="Shows this message.", inline=False)
-
+embed.add_field(name="%support", value="Sends the discord invite link to the support server.", inline=False)
 
 @bot.command()
 async def test(ctx):
@@ -60,11 +61,15 @@ async def rndltr(ctx):
 
 @bot.command()
 async def roll6(ctx):
-  await ctx.send(random.randint(1,6))
+  await ctx.send((random.randint(1,6)))
 
 @bot.command()
 async def roll20(ctx):
-  await ctx.send(random.randint(1,20))
+  await ctx.send((random.randint(1,20)))
+
+@bot.command()
+async def support(ctx):
+  await ctx.send(discord_link)
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
