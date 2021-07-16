@@ -7,6 +7,7 @@ from discord.ext import commands
 from keep_alive import keep_alive
 
 bot = commands.Bot(command_prefix = "%")
+bot.remove_command('help')
 
 flip_a_coin = ["Heads", "Tails"]
 insults = ["You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp.", "You are as useful as a white crayon.", "If your mom drops you off at school its considered littering.", "You are a waste of sperm, your mom should have swallowed.", "You're the type of person to fall in the shower and try to use the water to get back up.", "You're the type of person to break friendships over pineapples on pizza."]
@@ -26,7 +27,6 @@ embed.add_field(name="%rndltr", value="Randomly generates a letter of the Englis
 embed.add_field(name="%rolld6", value="Rolls a dice with 6 sides.", inline=False)
 embed.add_field(name="%rolld20", value="Rolls a dice with 20 sides.", inline=False)
 embed.add_field(name="%help", value="Shows this message.", inline=False)
-embed.set_footer(text="Help command")
 
 
 @bot.command()
@@ -49,6 +49,22 @@ async def quote(ctx):
 @bot.command()
 async def coinflip(ctx):
   await ctx.send(random.choice(flip_a_coin))
+
+@bot.command()
+async def invite(ctx):
+  await ctx.send(invite_link)
+
+@bot.command()
+async def rndltr(ctx):
+  await ctx.send(random.choice(letters))
+
+@bot.command()
+async def roll6(ctx):
+  await ctx.send(random.randint(1,6))
+
+@bot.command()
+async def roll20(ctx):
+  await ctx.send(random.randint(1,20))
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
