@@ -92,7 +92,7 @@ async def servers(ctx):
 
 @bot.command()
 async def vote(ctx):
-  await ctx.send("Vote here: https://top.gg/bot/864266661824692256/vote")
+  await ctx.send("top.gg: https://top.gg/bot/864266661824692256/vote \ndiscordbotlist.com: https://discordbotlist.com/bots/smokin-goose/upvote")
 
 @bot.command()
 async def status(ctx):
