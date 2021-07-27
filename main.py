@@ -6,14 +6,14 @@ import random
 from discord.ext import commands
 from keep_alive import keep_alive
 
-bot = commands.Bot(command_prefix = "sgb")
+bot = commands.Bot(command_prefix = "sg!")
 bot.remove_command('help')
 
 flip_a_coin = ["Heads", "Tails"]
-insults = ["You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp.", "You are as useful as a white crayon.", "If your mom drops you off at school its considered littering.", "You are a waste of sperm, your mom should have swallowed.", "You're the type of person to fall in the shower and try to use the water to get back up.", "You're the type of person to break friendships over pineapples on pizza.","You're a bitch and you know it.","You're the type of person to say things like lol and lmao in a real life conversation.","Your brain is lighter than gas.","Your IQ is lower than the melting point of helium.","Your iq is equivalent to your dick size in inches, and I can't see your dick.","You are so fat that thanos had to snap twice just for you.","I wonder how living the life of a hoe would be like, inform me."]
+insults = ["You're the type of person to like the warm side of the pillow.", "You're the human equivalent of a participation award.", "You’re the definition of a birth defect.", "You have small pp.", "You are as useful as a white crayon.", "If your mom drops you off at school its considered littering.", "You are a waste of sperm, your mom should have swallowed.", "You're the type of person to fall in the shower and try to use the water to get back up.", "You're the type of person to break friendships over pineapples on pizza.","You're a bitch and you know it.","You're the type of person to say things like lol and lmao in a real life conversation.","Your brain is lighter than gas.","Your IQ is lower than the melting point of helium.","Your iq is equivalent to your dick size in inches, and I can't see your dick.","You are so fat that thanos had to snap twice just for you.","I wonder how living the life of a hoe would be like, inform me.","If stupidity was a currency you would be rich.","Your brain is the one body part you don't have.","Your mom should have asked your dad to pull out.","Your own parents would rather have you hide in your room than interact with you.","You are the type of person to not click skip ad."]
 smokin_goose = "Smokin' Goose bot was created on July 12th 2021. Created by Hyperwolf#2525."
 invite_link = "https://discord.com/api/oauth2/authorize?client_id=864266661824692256&permissions=67226817&scope=bot"
-discord_link = "Join the support server here: discord.gg/GPQwfRF9wT"
+discord_link = "Join the support server here: https://discord.gg/q6smjcsKZ5"
 letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 
 
@@ -30,6 +30,9 @@ embed.add_field(name="rolld20", value="Rolls a dice with 20 sides.", inline=Fals
 embed.add_field(name="help", value="Shows this message.", inline=False)
 embed.add_field(name="support", value="Sends the discord invite link to the support server.", inline=False)
 embed.add_field(name="word", value="Sends a random word.", inline=False)
+embed.add_field(name="vote", value="Sends the top.gg bot voting link.", inline=False)
+embed.add_field(name="servers", value="See how many servers SGB is in.", inline=False)
+embed.add_field(name="status", value="See if the bot is on or not.", inline=False)
 
 @bot.command()
 async def test(ctx):
@@ -82,6 +85,27 @@ async def word(ctx):
   word = get_word()
   await ctx.send(word)
 
+@bot.command()
+async def servers(ctx):
+  servers = list(bot.guilds)
+  await ctx.send(f"SGB is connected on {str(len(servers))} servers")
+
+@bot.command()
+async def vote(ctx):
+  await ctx.send("Vote here: https://top.gg/bot/864266661824692256/vote")
+
+@bot.command()
+async def status(ctx):
+  await ctx.send("If you see this message, the bot is currently online.")
+
+@bot.command()
+async def owneronly(ctx):
+    yourID = 282949765161811968
+    if ctx.message.author.id == yourID:
+      await ctx.send('Placeholder')
+    else:
+      await ctx.send('Access denied, only [Bot Owner] can use this command.')
+
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
   json_data = json.loads(response.text)
@@ -103,7 +127,12 @@ def get_word():
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot))
-  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="discord.gg/GPQwfRF9wT"))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="https://discord.gg/q6smjcsKZ5"))
+
+  print('Servers connected to:')
+  for guild in bot.guilds:
+      print(guild.name)
+
 
 keep_alive()
 bot.run(os.getenv('TOKEN'))
