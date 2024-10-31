@@ -1,0 +1,20 @@
+{
+  "goose watcher":{
+      "salary": 10,
+      "description": "Watch some geese to earn some coins.",
+      "emoji":"",
+      "work_hours_required": 0
+  },
+  "goose caretaker":{
+    "salary": 25,
+    "description": "Take care of some geese to earn some coins.",
+    "emoji":"",
+    "work_hours_required": 15
+  },
+    "goose breeder":{
+    "salary": 100,
+    "description": "Breed geese to earn some coins.",
+    "emoji":"",
+    "work_hours_required": 50
+  }
+}
